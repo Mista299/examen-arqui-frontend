@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #f8f9fb;
+  --color-foreground: #0f1729;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f1729;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f1729;
+  --color-primary: #1e3a5f;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #eef1f6;
+  --color-secondary-foreground: #1a2332;
+  --color-muted: #eef1f6;
+  --color-muted-foreground: #6b7a8d;
+  --color-accent: #b45309;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #dfe3ea;
+  --color-input: #dfe3ea;
+  --color-ring: #1e3a5f;
+  --color-success: #16a34a;
+  --color-success-foreground: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-foreground: #ffffff;
+  --color-sidebar: #f3f4f8;
+  --color-sidebar-foreground: #1a2332;
+  --color-sidebar-border: #dfe3ea;
+  --color-sidebar-accent: #dbe4f0;
+  --color-sidebar-accent-foreground: #1e3a5f;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  .dark {
+    --color-background: #0b0f19;
+    --color-foreground: #e8ecf2;
+    --color-card: #141a2a;
+    --color-card-foreground: #e8ecf2;
+    --color-popover: #141a2a;
+    --color-popover-foreground: #e8ecf2;
+    --color-primary: #6b9fd4;
+    --color-primary-foreground: #0b0f19;
+    --color-secondary: #1e2740;
+    --color-secondary-foreground: #e8ecf2;
+    --color-muted: #1e2740;
+    --color-muted-foreground: #8899b0;
+    --color-accent: #f0a830;
+    --color-accent-foreground: #0b0f19;
+    --color-destructive: #ef4444;
+    --color-destructive-foreground: #e8ecf2;
+    --color-border: #1e2740;
+    --color-input: #1e2740;
+    --color-ring: #6b9fd4;
+    --color-success: #22c55e;
+    --color-success-foreground: #0b0f19;
+    --color-warning: #f0a830;
+    --color-warning-foreground: #0b0f19;
+    --color-sidebar: #0e1322;
+    --color-sidebar-foreground: #e8ecf2;
+    --color-sidebar-border: #1e2740;
+    --color-sidebar-accent: #162040;
+    --color-sidebar-accent-foreground: #6b9fd4;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+}
+
+@utility grade-bar {
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #ef4444 0%, #f59e0b 60%, #22c55e 100%);
+}
+
+@utility animate-in {
+  animation: animate-in 0.3s ease-out;
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade {
+  animation: animate-fade 0.2s ease-out;
+}
+
+@keyframes animate-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@utility animate-slide-right {
+  animation: animate-slide-right 0.25s ease-out;
+}
+
+@keyframes animate-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
