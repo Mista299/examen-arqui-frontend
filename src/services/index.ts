@@ -1,0 +1,6 @@
+export { estudiantesService } from "./estudiantes.service"
+export { materiasService } from "./materias.service"
+export { notasService } from "./notas.service"
+export { dashboardService } from "./dashboard.service"
+export { healthService } from "./health.service"
+export type { HealthInfo } from "./health.service"

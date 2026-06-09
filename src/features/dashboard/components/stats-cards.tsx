@@ -3,32 +3,51 @@ import { Card, CardContent } from "@/components/ui/card"
 import type { DashboardStats } from "@/types"
 import { cn, formatGrade } from "@/lib/utils"
 
+/**
+ * El backend puede devolver la respuesta de `/dashboard/stats` con todas
+ * sus propiedades, pero por seguridad (responses parciales, transient
+ * states, distintos entornos) este componente trata cualquier
+ * `undefined`/`null` como `0` y no rompe el render.
+ *
+ * Si en algún momento quieres mostrar "—" en vez de `0` cuando el dato
+ * no esté disponible, basta con cambiar las funciones `safe*` de abajo.
+ */
+const safeToString = (v: number | undefined | null): string => (v ?? 0).toString()
+const safeFormatGrade = (v: number | undefined | null): string => formatGrade(v ?? 0)
+const safePercent = (v: number | undefined | null): string => `${v ?? 0}%`
+
 export function StatsCards({ stats }: { stats: DashboardStats }) {
+  // Defensive defaults: si el objeto llega incompleto, caemos a 0 en vez de reventar.
+  const totalEstudiantes = stats?.totalEstudiantes ?? 0
+  const totalMaterias = stats?.totalMaterias ?? 0
+  const promedioGeneral = stats?.promedioGeneral ?? 0
+  const porcentajeAprobados = stats?.porcentajeAprobados ?? 0
+
   const cards = [
     {
       label: "Estudiantes",
-      value: stats.totalEstudiantes,
+      value: totalEstudiantes,
       icon: Users,
-      format: (v: number) => v.toString(),
+      format: safeToString,
     },
     {
       label: "Materias",
-      value: stats.totalMaterias,
+      value: totalMaterias,
       icon: BookOpen,
-      format: (v: number) => v.toString(),
+      format: safeToString,
     },
     {
       label: "Promedio General",
-      value: stats.promedioGeneral,
+      value: promedioGeneral,
       icon: TrendingUp,
-      format: formatGrade,
+      format: safeFormatGrade,
       bar: true,
     },
     {
       label: "% Aprobados (≥3.0)",
-      value: stats.porcentajeAprobados,
+      value: porcentajeAprobados,
       icon: Award,
-      format: (v: number) => `${v}%`,
+      format: safePercent,
       barPrimary: true,
     },
   ]
@@ -48,7 +67,7 @@ export function StatsCards({ stats }: { stats: DashboardStats }) {
                 <div
                   className="h-full rounded-full transition-all duration-700 ease-out"
                   style={{
-                    width: `${(stats.promedioGeneral / 5) * 100}%`,
+                    width: `${(promedioGeneral / 5) * 100}%`,
                     background: "linear-gradient(90deg, #ef4444 0%, #f59e0b 60%, #22c55e 100%)",
                   }}
                 />
@@ -58,7 +77,7 @@ export function StatsCards({ stats }: { stats: DashboardStats }) {
               <div className="mt-3 h-2 w-full rounded-full bg-muted overflow-hidden">
                 <div
                   className="h-full rounded-full bg-primary transition-all duration-700 ease-out"
-                  style={{ width: `${stats.porcentajeAprobados}%` }}
+                  style={{ width: `${porcentajeAprobados}%` }}
                 />
               </div>
             )}

@@ -1,3 +1,7 @@
+import type { HateoasLinks } from "./hateoas"
+
+// ===== Estudiantes =====
+
 export interface Estudiante {
   id: number
   cedula: string
@@ -5,14 +9,27 @@ export interface Estudiante {
   apellido: string
   email: string
   programa: string
+  _links?: HateoasLinks
 }
+
+// ===== Materias =====
 
 export interface Materia {
   id: number
   codigo: string
   nombre: string
   creditos: number
+  _links?: HateoasLinks
 }
+
+/** Materia anidada dentro de NotaResponse / EstudianteConNotas (versión ligera). */
+export interface MateriaSimple {
+  codigo: string
+  nombre: string
+  creditos: number
+}
+
+// ===== Notas =====
 
 export interface Nota {
   id: number
@@ -22,12 +39,6 @@ export interface Nota {
   observaciones: string | null
   estudiante: Estudiante
   materia: MateriaSimple
-}
-
-export interface MateriaSimple {
-  codigo: string
-  nombre: string
-  creditos: number
 }
 
 export interface NotaRequest {
@@ -45,6 +56,7 @@ export interface NotaResponse {
   fechaRegistro: string
   observaciones: string | null
   materia: MateriaSimple
+  _links?: HateoasLinks
 }
 
 export interface EstudianteConNotas {
@@ -52,6 +64,17 @@ export interface EstudianteConNotas {
   nombreCompleto: string
   programa: string
   notas: NotaResponse[]
+  _links?: HateoasLinks
+}
+
+// ===== Dashboard =====
+
+export interface DashboardStats {
+  totalEstudiantes: number
+  totalMaterias: number
+  promedioGeneral: number
+  porcentajeAprobados: number
+  _links?: HateoasLinks
 }
 
 export interface PromedioMateria {
@@ -59,14 +82,14 @@ export interface PromedioMateria {
   nombreMateria: string
   promedio: number
   cantidadNotas: number
+  _links?: HateoasLinks
 }
 
-export interface DashboardStats {
-  totalEstudiantes: number
-  totalMaterias: number
-  promedioGeneral: number
-  porcentajeAprobados: number
-}
+// ===== Actividad (derivada en cliente) =====
+//
+// "Actividad reciente" no es un endpoint del backend; la construimos
+// en el cliente a partir de las últimas notas registradas.
+// El campo `estudiante` puede ser null si la nota no trae el dato embebido.
 
 export interface Actividad {
   id: string
